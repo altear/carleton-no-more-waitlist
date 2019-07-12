@@ -16,6 +16,6 @@ login:
 
 # Sample structure:
 # terms:
-#     - YYYYTT (ie. "201930" for 2019 Fall, or "202020" for 2020 Summer, or "202110" for 2021 Winter)
+#    YYYYTT: # (ie. "201930" for 2019 Fall, or "202020" for 2020 Summer, or "202110" for 2021 Winter)
 #       - Course CRN
 #       - Course CRN
