@@ -1,8 +1,12 @@
 # Carleton - No More Waitlist
 Do you want to get into a course that's full? This code automatically joins courses as they become available
 
-## Usage
+## Demo
+Note: My laptop is old.
+![](docs/assets/demo_carleton_central_automation.gif)
 
+
+## Usage
 1. Download the code and install dependencies.
   ```
   git clone https://github.com/altear/carleton-no-more-waitlist.git
