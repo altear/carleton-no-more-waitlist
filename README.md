@@ -1,5 +1,5 @@
 # Carleton - No More Waitlist
-Do you want to get into a course that's full? This code automatically joins courses as they become available
+Do you want to get into a course that's full? Are you tired of constantly checking if room has opened up? This code automatically joins courses as they become available
 
 ## Demo
 Note: My laptop is old.
