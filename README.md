@@ -13,7 +13,7 @@ Note: My laptop is old.
   cd carleton-no-more-waitlist
   pipenv install
   ```
-2. Update the config.yaml file with your MyCarleton username, password, and the courses you want to sign up for.
+2. Rename the config.yaml.template file as config.yaml. Then update it with your MyCarleton username, password, and the courses you want to sign up for.
 3. Try running it.
   ```
   pipenv run python main.py
