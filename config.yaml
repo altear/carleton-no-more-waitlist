@@ -1,0 +1,10 @@
+# MyCarleton Username/Password
+login:
+  username: "Your Username"
+  password: "Your password"
+
+# Sample structure:
+# terms:
+#   - YYYYTT (ie. "201930" for 2019 Fall)
+#     - Course CRN
+#     - Course CRN
