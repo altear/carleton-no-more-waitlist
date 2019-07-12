@@ -57,7 +57,7 @@ class CheckCourses:
 
     def handle_term(self, term_select_url, term_id):
         term_id = str(term_id)
-        logging.info(f"Selecting courses for {TERM_SEASONS[term_id[4:]]} {term_id[:4]}")
+        logging.info(f"Selecting term: {TERM_SEASONS[term_id[4:]]} {term_id[:4]}")
         create_new_tab(self.driver)
 
         self.driver.get(term_select_url)
@@ -69,7 +69,7 @@ class CheckCourses:
         self.driver.find_element_by_xpath("//input[@type='submit']").click()
         courses = pydash.get(self.config, f'terms.{term_id}')
         
-        logging.info("Entering course CRNs")
+        logging.info(f"Attempting to add courses: {''.join([str(course) for course in courses])}")
         for i in range(len(courses)):
             course = courses[i]
             field_id = f"crn_id{i+1}"
@@ -77,7 +77,11 @@ class CheckCourses:
         self.driver.find_element_by_xpath("//input[@value='Submit']").click()
 
         signup_error_df = self.parse_schedule_errors()
-        print("Courses without errors", set(courses) - set(signup_error_df.CRN))
+        for course in set(courses) - set(signup_error_df.CRN):
+            logging.info(f"Successfully Registered: {course}")
+
+        for index, course in signup_error_df.iterrows():
+            logging.info(f"Failed to Register: {course.Subj}{course.Crse} (CRN: {course.CRN}) - {course.Status}")
         close_tab(self.driver)
 
     def parse_schedule_errors(self):
