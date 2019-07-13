@@ -13,6 +13,7 @@ pydash = "*"
 pandas = "*"
 bs4 = "*"
 lxml = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.6"

@@ -2,7 +2,7 @@ import logging
 import pydash
 import bs4
 import pandas as pd
-from src.utils import URL, config_loader, create_new_tab, close_tab
+from src.utils import URL, config_loader, create_new_tab, close_tab, config_updater
 from src.notifications import NotificationHandler
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -80,8 +80,10 @@ class CheckCourses:
 
         signup_error_df = self.parse_schedule_errors()
         for course in set(courses) - set(signup_error_df.CRN):
-            logging.info(f"Successfully Registered: {course}")
-
+            logging.info(f"Successfully Registered: {course}. Removing from config.")
+            course_index = courses.index(course)
+            courses.pop(course_index)
+            config_updater('config.yaml', config)
         for index, course in signup_error_df.iterrows():
             logging.info(f"Failed to Register: {course.Subj}{course.Crse} (CRN: {course.CRN}) - {course.Status}")
         close_tab(self.driver)

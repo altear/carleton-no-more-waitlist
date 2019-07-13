@@ -37,21 +37,35 @@ class NotificationHandler:
         notification = MIMEMultipart()
         notification['To'] = recipient.get('address')            
         notification['From'] = 'CU Bot'
-        notification['Subject'] = 'Successfully Registere d'
 
-        text = '<h1>Registration Success</h1>'
-        mime_part = MIMEText(text, 'html')
-        notification.attach(mime_part)
+        registered_df = data.get('registration_success')
+        failed_df = data.get('registration_failure')
 
-        mime_part = MIMEText(data.get('registration_success').to_html(index=False, justify='left'), 'html')
-        notification.attach(mime_part)
+        if not (pydash.get(recipient, 'notify_on.registration_success') and registered_df.shape[0]) \
+            and not (pydash.get(recipient, 'notify_on.registration_failure') and failed_df.shape[0]):
+            logging.info("No notification data to send.")
+            return None
 
-        text = '<h1>Registration Failed</h1>'
-        mime_part = MIMEText(text, 'html')
-        notification.attach(mime_part)
+        if registered_df.shape[0]:
+            notification['Subject'] = f'WaitList Update: Successfully Registered for: {", ".join(registered_df.values)}'
+        else:
+            notification['Subject'] = 'WaitList Update: No New Registrations'
+        
+        if pydash.get(recipient, 'notify_on.registration_success') and registered_df.shape[0]:
+            text = '<h1>Successfully Registered</h1>'
+            mime_part = MIMEText(text, 'html')
+            notification.attach(mime_part)
 
-        mime_part = MIMEText(data.get('registration_failure').to_html(index=False, justify='left'), 'html')
-        notification.attach(mime_part)
+            mime_part = MIMEText(registered_df.to_html(index=False, justify='left'), 'html')
+            notification.attach(mime_part)
+
+        if pydash.get(recipient, 'notify_on.registration_failure') and failed_df.shape[0]:
+            text = '<h1>Still Waiting For</h1>'
+            mime_part = MIMEText(text, 'html')
+            notification.attach(mime_part)
+
+            mime_part = MIMEText(failed_df[['Status', 'CRN', 'Subj', 'Crse', 'Sec', 'Title']].to_html(index=False, justify='left'), 'html')
+            notification.attach(mime_part)
 
         return notification
         

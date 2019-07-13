@@ -32,14 +32,12 @@ login:
 # Recipient addresses
 # recipients:
 #   - address: "your.email@some.domain.com"
-#     type: "email"
 #     notify_on:
-#     - successful_registration
-#     - failed_registration
+#     - registration_success
+#     - registration_failure
 #   - address: "1111111111@txt.bell.ca"
-#     type: "plaintext"
 #     notify_on:
-#     - successful_registration
+#     - registration_success
 
 # The account to send the emails from 
 bot_account:

@@ -14,6 +14,9 @@ def search_for_text(driver, text, element_type=None):
 def config_loader(path):
     return yaml.load(Path(path))
 
+def config_updater(path, config):
+    return yaml.dump(config, (Path(path)))
+
 def create_new_tab(driver):
     main_window = driver.current_window_handle
     driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
