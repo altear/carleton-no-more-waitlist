@@ -1,21 +1,63 @@
-#
-# READ ME:
-# Rename this file as "config.yaml", then configure as desired. 
-#
+#~~~~~~~~~~~~~~~~~~~~\
+#    INSTRUCTIONS     > Rename this file as "config.yaml", then configure as desired. 
+#~~~~~~~~~~~~~~~~~~~~/
 
-# if "headless" then browser does not visibly open, otherwise browser opens
-mode: ""
+#~~~~~~~~~~~~~~~~~~~#
+#       Basic       #
+#~~~~~~~~~~~~~~~~~~~#
+# If "headless" then browser does not visibly open, otherwise browser opens
+mode: "headless"
 
-# Log file location
-logfile: "no_more_waitlist.log"
-
-# MyCarleton Username/Password
+# Culearn Login Credentials
 login:
-  username: "Your username"
-  password: "Your password"
+  username: "Your Username"
+  password: "Your assword"
 
-# Sample structure:
+#~~~~~~~~~~~~~~~~~~~#
+#      Courses      #
+#~~~~~~~~~~~~~~~~~~~#
 # terms:
-#    YYYYTT: # (ie. "201930" for 2019 Fall, or "202020" for 2020 Summer, or "202110" for 2021 Winter)
-#       - Course CRN
-#       - Course CRN
+#   [YYYYTT]:  # (ie. "201910" for 2019 Winter, or "201920" for 2019 Summer, or "201930" for 2019 Fall)
+#     - [Course CRN]
+#     - [Course CRN]
+# 
+# ex.
+# terms:
+#   204910:
+#     - 000000
+
+#~~~~~~~~~~~~~~~~~~~#
+#   Notifications   #
+#~~~~~~~~~~~~~~~~~~~#
+# Recipient addresses
+# recipients:
+#   - address: "your.email@some.domain.com"
+#     type: "email"
+#     notify_on:
+#     - successful_registration
+#     - failed_registration
+#   - address: "1111111111@txt.bell.ca"
+#     type: "plaintext"
+#     notify_on:
+#     - successful_registration
+
+# The account to send the emails from 
+bot_account:
+  username: "Your bot email username"
+  password: "Your bot email password"
+  smtp:
+    server: "smtp.gmail.com" 
+    port: 465
+
+# Reference for sending emails to mobile (do not uncomment)
+#   telus: 'msg.telus.com'
+#   bell: 'txt.bell.ca'
+#   rogers: 'pcs.rogers.com'
+#   fido: 'mms.fido.ca'
+#   freedom: 'txt.freedommobile.ca'
+#   koodo mobile: 'msg.koodomobile.com'
+
+#~~~~~~~~~~~~~~~~~~~#
+#      Logging      #
+#~~~~~~~~~~~~~~~~~~~#
+logfile: "no_more_waitlist.log"

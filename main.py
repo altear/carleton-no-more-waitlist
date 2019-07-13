@@ -6,9 +6,9 @@ from selenium import webdriver
 from pathlib import Path
 from src.utils import config_loader, URL
 
-def run_scripts(driver):
+def run_scripts(driver, config):
     from src import no_more_waitlist
-    s = no_more_waitlist.CheckCourses(driver)
+    s = no_more_waitlist.CheckCourses(driver, config)
     s.run()
 
 def find_selenium_driver():
@@ -48,7 +48,7 @@ def main():
 
         with webdriver.Chrome(driver_path, chrome_options=options) as driver:
             logging.info("Running scripts")
-            run_scripts(driver)
+            run_scripts(driver, config)
 
     except Exception as e:
         logging.critical(e)

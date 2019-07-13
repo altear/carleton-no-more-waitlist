@@ -3,6 +3,7 @@ import pydash
 import bs4
 import pandas as pd
 from src.utils import URL, config_loader, create_new_tab, close_tab
+from src.notifications import NotificationHandler
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -16,9 +17,10 @@ TERM_SEASONS = {
 }
 
 class CheckCourses:
-    def __init__(self, driver):
+    def __init__(self, driver, config):
         self.driver = driver
-        self.config = config_loader('config.yaml')
+        self.config = config
+        self.notification_handler = NotificationHandler(self.config)
     
     def run(self):
         logging.info("Starting script")
@@ -83,6 +85,12 @@ class CheckCourses:
         for index, course in signup_error_df.iterrows():
             logging.info(f"Failed to Register: {course.Subj}{course.Crse} (CRN: {course.CRN}) - {course.Status}")
         close_tab(self.driver)
+
+        notification_data = {
+            'registration_success': pd.Series(list(set(courses) - set(signup_error_df.CRN))).to_frame(),
+            'registration_failure': signup_error_df
+        }
+        self.notification_handler.send_notifications(data=notification_data)
 
     def parse_schedule_errors(self):
         error_table_index = 8
